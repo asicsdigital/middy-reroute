@@ -41,9 +41,7 @@
 /useragenttest /useragentworked   301    UserAgent=IE:<=11
 
 # Splat with Country and Language Conditions
-/conditions/shop/*  /en-fr/checkout/:splat  Language=EN  Country=FR
-/conditions/shop/*  /en-us/checkout/:splat  Language=EN
-/conditions/shop/*  /failed_conditions/:splat
 /conditions/shop/query* /de-de/checkout/query:splat  Language=DE  Country=DE
 /conditions/shop/query* /es-es/checkout/query:splat  Language=ES
-/conditions/shop/query* /failed_conditions/query:splat
+/conditions/shop/*  /en-fr/checkout/:splat  Language=EN  Country=FR
+/conditions/shop/*  /en-us/checkout/:splat  Language=EN
