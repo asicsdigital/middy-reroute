@@ -67,3 +67,5 @@ docs/
 
 .idea/
 .vscode/
+
+Pipfile*
