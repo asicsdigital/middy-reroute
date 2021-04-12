@@ -295,6 +295,15 @@ describe('📦  Reroute Middleware', () => {
         redirectResponse('/checkout/2004/01/10/my-story', 301),
       );
     });
+
+    it('Splats with Queries (Internal) should work', async () => {
+      const event = await testReroute({
+        event: eventResponse({ uri: '/query/2004/01/10/my-story?utm_campaign=test' }),
+      });
+      expect(event).toEqual(
+        redirectResponse('/checkout/query/2004/01/10/my-story?utm_campaign=test', 301),
+      );
+    });
   });
 
   describe('Host Domains', () => {
@@ -412,6 +421,65 @@ describe('📦  Reroute Middleware', () => {
       expect(unMatchEvent).toEqual(
         eventResponse({ uri: '/wishyouwerehere/index.html' }),
       );
+    });
+  });
+
+  describe('Condition: Country, Language with Splat', () => {
+    it('Country and Language Conditions with Splat should work', async () => {
+      const matchEvent = await testReroute({
+        event: eventResponse({
+          uri: '/conditions/shop/2004/01/10/my-story_country_lang_splat',
+          headers: {
+            'accept-language': 'en-FR,en-GB,en-US;q=0.9,en-FR;q=0.7,en;q=0.8',
+            'cloudfront-viewer-country': 'FR',
+          },
+        }),
+      });
+      expect(matchEvent).toEqual(redirectResponse('/en-fr/checkout/2004/01/10/my-story_country_lang_splat', 301));
+    });
+  });
+
+  describe('Condition: Language with Splat', () => {
+    it('Language Condition with Splat should work', async () => {
+      const matchEvent = await testReroute({
+        event: eventResponse({
+          uri: '/conditions/shop/2004/01/10/my-story_lang_splat',
+          headers: {
+            'accept-language': 'en-US,en-GB;q=0.9,en;q=0.8',
+            'cloudfront-viewer-country': 'NL',
+          },
+        }),
+      });
+      expect(matchEvent).toEqual(redirectResponse('/en-us/checkout/2004/01/10/my-story_lang_splat', 301));
+    });
+  });
+
+  describe('Condition: Country, Language with Splat and Query', () => {
+    it('Country and Language Conditions with Splat and Query parameters should work', async () => {
+      const matchEvent1 = await testReroute({
+        event: eventResponse({
+          uri: '/conditions/shop/query/2004/01/10/my-story?utm_campaign=test_country_lang_splat_query',
+          headers: {
+            'accept-language': 'de-DE,en-GB;q=0.9,fr-CA;q=0.7,en;q=0.8',
+            'cloudfront-viewer-country': 'DE',
+          },
+        }),
+      });
+      expect(matchEvent1).toEqual(redirectResponse('/de-de/checkout/query/2004/01/10/my-story?utm_campaign=test_country_lang_splat_query', 301));
+    });
+  });
+
+  describe('Condition: Language with Splat and Query', () => {
+    it('Language Condition with Splat and Query parameters should work', async () => {
+      const matchEvent1 = await testReroute({
+        event: eventResponse({
+          uri: '/conditions/shop/query/2004/01/10/my-story?utm_campaign=test_lang_splat_query',
+          headers: {
+            'accept-language': 'es-ES,en-GB;q=0.9,fr-CA;q=0.7,en;q=0.8',
+          },
+        }),
+      });
+      expect(matchEvent1).toEqual(redirectResponse('/es-es/checkout/query/2004/01/10/my-story?utm_campaign=test_lang_splat_query', 301));
     });
   });
 
