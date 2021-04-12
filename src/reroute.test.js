@@ -298,10 +298,10 @@ describe('📦  Reroute Middleware', () => {
 
     it('Splats with Queries (Internal) should work', async () => {
       const event = await testReroute({
-        event: eventResponse({ uri: '/shop/2004/01/10/my-story?utm_campaign=test' }),
+        event: eventResponse({ uri: '/query/2004/01/10/my-story?utm_campaign=test' }),
       });
       expect(event).toEqual(
-        redirectResponse('/checkout/2004/01/10/my-story?utm_campaign=test', 301),
+        redirectResponse('/checkout/query/2004/01/10/my-story?utm_campaign=test', 301),
       );
     });
   });

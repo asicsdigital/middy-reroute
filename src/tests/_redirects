@@ -22,7 +22,7 @@
 /shop/*  /checkout/:splat
 
 # Queries
-/shop/query* /checkout/query:splat
+/query* /checkout/query:splat
 
 # Custom 404
 /ecommerce  /store-closed   404
@@ -41,7 +41,7 @@
 /useragenttest /useragentworked   301    UserAgent=IE:<=11
 
 # Splat with Country and Language Conditions
-/conditions/shop/query* /de-de/checkout/query:splat  Country=DE Language=DE  
+/conditions/shop/query* /de-de/checkout/query:splat  Country=DE Language=DE
 /conditions/shop/query* /es-es/checkout/query:splat  Language=ES
 /conditions/shop/*  /en-fr/checkout/:splat  Country=FR Language=EN
 /conditions/shop/*  /en-us/checkout/:splat  Language=EN
