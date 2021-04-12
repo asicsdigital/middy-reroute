@@ -312,7 +312,7 @@ const findMatch = (data, path, host, protocol) => {
   const fullUri = host && `${protocol}${host}${path}`;
   const match = _find(data, (o) => {
     const from = route(o.from);
-    params = isAbsoluteURI(o.from) ? from(fullUri) : from(parse(path).pathname);
+    params = isAbsoluteURI(o.from) ? from(fullUri) : from(parse(path, true).pathname);
 
     // If there specific language rules, do they match
     const languagePass = !!o.conditions.language
